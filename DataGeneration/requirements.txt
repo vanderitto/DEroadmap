@@ -1,3 +1,6 @@
 matplotlib
-numpytensorflow 
+tenserflow
 kagglehub
+seaborn
+pandas
+numpy
