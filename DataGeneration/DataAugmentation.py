@@ -53,13 +53,13 @@ def convert_to_float(image, label):
 data_augmentation = tf.keras.Sequential([
     layers.RandomFlip("horizontal"),    # Odbicie lewo-prawo
     layers.RandomRotation(0.1),         # Obrót o max 10%
-    layers.RandomContrast(0.2),         # Zmiana jasności/kontrastu
+    layers.RandomContrast(0.9),         # Zmiana jasności/kontrastu
 ])
 
 # Budowa finalnych potoków (Pipeline)
 ds_train = (
     ds_train_
-    .map(lambda x, y: (data_augmentation(x, training=True), y)) # Augmentacja TYLKO w treningu
+    .map(lambda x, y: (data_augmentation(x, training=True), y)) 
     .map(convert_to_float)
     .cache()
     .prefetch(buffer_size=AUTOTUNE)
@@ -72,7 +72,6 @@ ds_valid = (
     .prefetch(buffer_size=AUTOTUNE)
 )
 
-# --- WIZUALIZACJA ---
 # Zobaczmy, co "widzi" sieć po augmentacji
 plt.figure(figsize=(10, 10))
 for images, _ in ds_train.take(1): # Pobierz jedną partię (batch)
